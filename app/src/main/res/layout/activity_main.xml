@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.yc.rclayout.RCConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.yc.rclayout.RCImageView
-        android:id="@+id/rciv_one"
+        <com.yc.rclayout.RCImageView
+            android:id="@+id/rciv_one"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/test"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/rciv_two"
+            app:layout_constraintTop_toTopOf="parent"
+            app:round_corner_bottom_left="20dp"
+            app:stroke_color="@color/colorAccent"
+            app:stroke_width="6dp" />
+
+        <com.yc.rclayout.RCImageView
+            android:id="@+id/rciv_two"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/test"
+            app:layout_constraintLeft_toRightOf="@+id/rciv_one"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:round_corner="20dp"
+            app:stroke_color="@color/colorAccent"
+            app:stroke_width="6dp" />
+
+        <com.yc.rclayout.RCImageView
+            android:id="@+id/rciv_three"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/test"
+            app:clip_background="true"
+            app:layout_constraintEnd_toEndOf="@+id/rciv_one"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rciv_one"
+            app:round_as_circle="true"
+            app:stroke_color="@color/colorAccent"
+            app:stroke_width="6dp" />
+
+    <com.yc.rclayout.RCConstraintLayout
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@mipmap/test"
-        app:layout_constraintRight_toLeftOf="@+id/rciv_two"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:round_corner_bottom_left="20dp"
         app:stroke_color="@color/colorAccent"
-        app:stroke_width="6dp" />
-
-    <com.yc.rclayout.RCImageView
-        android:id="@+id/rciv_two"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@mipmap/test"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/rciv_one"
-        app:round_corner="20dp"
-        app:stroke_color="@color/colorAccent"
-        app:stroke_width="6dp" />
-
-    <com.yc.rclayout.RCImageView
-        android:id="@+id/three"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@mipmap/test"
-        app:clip_background="true"
-        app:layout_constraintEnd_toEndOf="@+id/rciv_one"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rciv_one"
-        app:round_as_circle="true"
-        app:stroke_color="@color/colorAccent"
-        app:stroke_width="6dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/rciv_three"
+        app:stroke_width="6dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.yc.rclayout.RCConstraintLayout>

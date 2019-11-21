@@ -2,11 +2,10 @@ package com.yc.rclayout;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Checkable;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.yc.rclayout.helper.RCAttrs;
 import com.yc.rclayout.helper.RCHelper;
