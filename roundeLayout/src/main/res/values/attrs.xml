@@ -14,6 +14,19 @@
     <attr name="stroke_width" format="integer|dimension" />
     <!-- 是否剪裁 RCLayout 的背景 -->
     <attr name="clip_background" format="boolean" />
+
+    <attr name="shadow_sides" format="flags">
+        <flag name="all" value="0x1111" />
+        <flag name="left" value="0x0001" />
+        <flag name="top" value="0x0010" />
+        <flag name="right" value="0x0100" />
+        <flag name="bottom" value="0x1000" />
+    </attr>
+    <attr name="shadow_color" format="color|reference" />
+    <attr name="shadow_ratius" format="integer|dimension" />
+    <attr name="shadow_offsetX" format="integer|dimension" />
+    <attr name="shadow_offsetY" format="integer|dimension" />
+
     <!--真正用于解析的属性-->
     <declare-styleable name="RCAttrs">
         <attr name="round_as_circle" />
@@ -25,6 +38,11 @@
         <attr name="stroke_color" />
         <attr name="stroke_width" />
         <attr name="clip_background" />
+        <attr name="shadow_sides" />
+        <attr name="shadow_color" />
+        <attr name="shadow_ratius" />
+        <attr name="shadow_offsetX" />
+        <attr name="shadow_offsetY" />
     </declare-styleable>
 
     <!--假体：用于提示-->
@@ -38,7 +56,6 @@
         <attr name="stroke_color" />
         <attr name="stroke_width" />
         <attr name="clip_background" />
-
     </declare-styleable>
 
     <!--假体：用于提示-->
@@ -52,6 +69,11 @@
         <attr name="stroke_color" />
         <attr name="stroke_width" />
         <attr name="clip_background" />
+        <attr name="shadow_sides" />
+        <attr name="shadow_color" />
+        <attr name="shadow_ratius" />
+        <attr name="shadow_offsetX" />
+        <attr name="shadow_offsetY" />
     </declare-styleable>
 
     <!--假体：用于提示-->
