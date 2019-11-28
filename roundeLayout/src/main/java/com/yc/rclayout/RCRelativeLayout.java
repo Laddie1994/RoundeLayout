@@ -32,13 +32,27 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
     }
 
     @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        mRCHelper.setPadding(this);
+    }
+
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mRCHelper.onSizeChanged(this, w, h);
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        widthMeasureSpec = mRCHelper.measureWidth(widthMeasureSpec);
+        heightMeasureSpec = mRCHelper.measureHeight(heightMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
     protected void dispatchDraw(Canvas canvas) {
+        mRCHelper.onShadowDraw(canvas);
         canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
         mRCHelper.onClipDraw(canvas);

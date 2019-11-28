@@ -31,7 +31,7 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, attrs);
-        mRCHelper.setupPadding(this);
+        mRCHelper.setPadding(this);
     }
 
     @Override
@@ -45,6 +45,11 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         widthMeasureSpec = mRCHelper.measureWidth(widthMeasureSpec);
         heightMeasureSpec = mRCHelper.measureHeight(heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
     }
 
     @Override
@@ -135,6 +140,31 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         mRCHelper.mStrokeColor = strokeColor;
         invalidate();
     }
+
+//    public void setShadowColor(int shadowColor) {
+//        mRCHelper.mShadowColor = shadowColor;
+//        invalidate();
+//    }
+//
+//    public void setShadowSides(int shadowSides) {
+//        mRCHelper.mShadowSides = shadowSides;
+//        invalidate();
+//    }
+//
+//    public void setShadowRadius(int shadowRadius) {
+//        mRCHelper.mShadowRadius = shadowRadius;
+//        invalidate();
+//    }
+//
+//    public void setShadowOffsetX(int shadowOffsetX) {
+//        mRCHelper.mShadowOffsetX = shadowOffsetX;
+//        invalidate();
+//    }
+//
+//    public void setShadowOffsetY(int shadowOffsetY) {
+//        mRCHelper.mShadowOffsetY = shadowOffsetY;
+//        invalidate();
+//    }
 
     @Override
     public void invalidate() {
