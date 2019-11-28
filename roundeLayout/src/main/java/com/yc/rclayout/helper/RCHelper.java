@@ -55,8 +55,10 @@ public class RCHelper {
     public int mShadowRadius;             // 阴影半径
     public int mShadowOffsetX;                  // 阴影X轴偏移
     public int mShadowOffsetY;                  // 阴影Y轴偏移
+    private View mTargetView;
 
-    public void initAttrs(Context context, AttributeSet attrs) {
+    public void initAttrs(Context context, View targetView, AttributeSet attrs) {
+        mTargetView = targetView;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RCAttrs);
         mRoundAsCircle = ta.getBoolean(R.styleable.RCAttrs_round_as_circle, false);
         mStrokeColorStateList = ta.getColorStateList(R.styleable.RCAttrs_stroke_color);
@@ -126,8 +128,10 @@ public class RCHelper {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
-            width += (mShadowSides & SIDE_LEFT) == SIDE_LEFT ? mShadowRadius + mShadowOffsetX : 0;
-            width += (mShadowSides & SIDE_RIGHT) == SIDE_RIGHT ? mShadowRadius + mShadowOffsetX : 0;
+            int paddingLeft = mTargetView.getPaddingLeft();
+            int paddingRight = mTargetView.getPaddingRight();
+            width -= (mShadowSides & SIDE_LEFT) == SIDE_LEFT ? mShadowRadius + mShadowOffsetX : 0;
+            width -= (mShadowSides & SIDE_RIGHT) == SIDE_RIGHT ? mShadowRadius + mShadowOffsetX : 0;
             return MeasureSpec.makeMeasureSpec(width, widthMode);
         }
         return widthMeasureSpec;
@@ -142,8 +146,10 @@ public class RCHelper {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) {
             int height = MeasureSpec.getSize(heightMeasureSpec);
-            height += (mShadowSides & SIDE_TOP) == SIDE_TOP ? mShadowRadius + mShadowOffsetY : 0;
-            height += (mShadowSides & SIDE_BOTTOM) == SIDE_BOTTOM ? mShadowRadius + mShadowOffsetY : 0;
+            int paddingTop = mTargetView.getPaddingTop();
+            int paddingBottom = mTargetView.getPaddingBottom();
+//            height -= (mShadowSides & SIDE_TOP) == SIDE_TOP ? mShadowRadius + mShadowOffsetY : 0;
+            height -= (mShadowSides & SIDE_BOTTOM) == SIDE_BOTTOM ? mShadowRadius + mShadowOffsetY : 0;
             return MeasureSpec.makeMeasureSpec(height, heightMode);
         }
         return heightMeasureSpec;

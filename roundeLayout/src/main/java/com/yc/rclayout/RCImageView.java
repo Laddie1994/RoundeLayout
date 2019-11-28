@@ -31,7 +31,7 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
     public RCImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
-        mRCHelper.initAttrs(context, attrs);
+        mRCHelper.initAttrs(context, this, attrs);
     }
 
     @Override

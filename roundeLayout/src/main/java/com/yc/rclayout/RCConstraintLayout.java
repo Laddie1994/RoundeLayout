@@ -30,7 +30,7 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
     public RCConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
-        mRCHelper.initAttrs(context, attrs);
+        mRCHelper.initAttrs(context, this, attrs);
         mRCHelper.setPadding(this);
     }
 
@@ -42,8 +42,8 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        widthMeasureSpec = mRCHelper.measureWidth(widthMeasureSpec);
-        heightMeasureSpec = mRCHelper.measureHeight(heightMeasureSpec);
+//        widthMeasureSpec = mRCHelper.measureWidth(widthMeasureSpec);
+//        heightMeasureSpec = mRCHelper.measureHeight(heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 

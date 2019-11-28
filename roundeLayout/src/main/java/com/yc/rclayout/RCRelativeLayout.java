@@ -28,7 +28,7 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
     public RCRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
-        mRCHelper.initAttrs(context, attrs);
+        mRCHelper.initAttrs(context, this, attrs);
     }
 
     @Override
