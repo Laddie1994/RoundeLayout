@@ -52,10 +52,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/rciv_two"
         app:layout_constraintRight_toRightOf="@+id/rciv_two"
         app:layout_constraintTop_toBottomOf="@+id/rciv_two"
-        app:round_corner_bottom_left="20dp"
+        app:round_corner_bottom_left="30dp"
         app:shadow_color="#000000"
-        app:shadow_offsetY="8dp"
-        app:shadow_offsetX="8dp"
+        app:shadow_offsetY="6dp"
         app:shadow_ratius="6dp"
         app:stroke_color="@color/colorAccent"
         app:stroke_width="1dp">

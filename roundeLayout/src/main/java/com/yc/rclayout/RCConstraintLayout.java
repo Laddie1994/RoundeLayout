@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Checkable;
 
 import com.yc.rclayout.helper.RCAttrs;
@@ -31,6 +30,7 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
         mRCHelper.setPadding(this);
     }
 
@@ -38,13 +38,6 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         mRCHelper.onSizeChanged(this, w, h);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        widthMeasureSpec = mRCHelper.measureWidth(widthMeasureSpec);
-//        heightMeasureSpec = mRCHelper.measureHeight(heightMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
