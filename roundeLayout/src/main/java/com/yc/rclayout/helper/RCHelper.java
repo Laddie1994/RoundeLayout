@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
@@ -121,10 +122,11 @@ public class RCHelper {
 
     /**
      * 测量宽度
+     *
      * @param widthMeasureSpec
      * @return
      */
-    public int measureWidth(int widthMeasureSpec){
+    public int measureWidth(int widthMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
@@ -139,10 +141,11 @@ public class RCHelper {
 
     /**
      * 测量高度
+     *
      * @param heightMeasureSpec
      * @return
      */
-    public int measureHeight(int heightMeasureSpec){
+    public int measureHeight(int heightMeasureSpec) {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         if (heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) {
             int height = MeasureSpec.getSize(heightMeasureSpec);
@@ -193,12 +196,14 @@ public class RCHelper {
         mAreaRegion.setPath(mClipPath, clip);
     }
 
-    public void onShadowDraw(Canvas canvas){
-        mShadowPaint.setAntiAlias(true);
-        mShadowPaint.setStyle(Paint.Style.FILL);
-        mShadowPaint.setColor(Color.WHITE);
-        mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, mShadowColor);
-        canvas.drawPath(mClipPath, mShadowPaint);
+    public void onShadowDraw(Canvas canvas) {
+        if (mShadowOffsetX > 0 || mShadowOffsetY > 0 || mShadowColor > 0 || mShadowRadius > 0) {
+            mShadowPaint.setAntiAlias(true);
+            mShadowPaint.setStyle(Paint.Style.FILL);
+            mShadowPaint.setColor(Color.WHITE);
+            mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, mShadowColor);
+            canvas.drawPath(mClipPath, mShadowPaint);
+        }
     }
 
     public void onClipDraw(Canvas canvas) {
