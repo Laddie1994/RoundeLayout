@@ -223,17 +223,24 @@ public class RCHelper {
         mPaint.setColor(Color.WHITE);
         mPaint.setStyle(Paint.Style.FILL);
 
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-            canvas.drawPath(mClipPath, mPaint);
-        } else {
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1) {
+//            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+//            canvas.drawPath(mClipPath, mPaint);
+//        } else {
+//            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+//
+//            final Path path = new Path();
+//            path.addRect(0, 0, (int) mLayer.width(), (int) mLayer.height(), Path.Direction.CW);
+//            path.op(mClipPath, Path.Op.DIFFERENCE);
+//            canvas.drawPath(path, mPaint);
+//        }
 
-            final Path path = new Path();
-            path.addRect(0, 0, (int) mLayer.width(), (int) mLayer.height(), Path.Direction.CW);
-            path.op(mClipPath, Path.Op.DIFFERENCE);
-            canvas.drawPath(path, mPaint);
-        }
+        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+
+        final Path path = new Path();
+        path.addRect(0, 0, (int) mLayer.width(), (int) mLayer.height(), Path.Direction.CW);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) path.op(mClipPath, Path.Op.DIFFERENCE);
+        canvas.drawPath(path, mPaint);
     }
 
 
