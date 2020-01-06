@@ -42,11 +42,6 @@ public class RCFrameLayout extends FrameLayout implements Checkable, RCAttrs {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-    }
-
-    @Override
     public void dispatchDraw(Canvas canvas) {
         mRCHelper.onShadowDraw(canvas);
         canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);

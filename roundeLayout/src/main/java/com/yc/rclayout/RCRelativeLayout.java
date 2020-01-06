@@ -29,11 +29,7 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
-    }
-
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+        setLayerType(LAYER_TYPE_SOFTWARE, null);
         mRCHelper.setPadding(this);
     }
 

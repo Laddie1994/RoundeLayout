@@ -100,15 +100,16 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="20dp"
+        app:clip_background="true"
         app:layout_constraintLeft_toRightOf="@+id/frame_layout"
         app:layout_constraintTop_toBottomOf="@+id/rciv_three"
-        app:round_corner="6dp"
-        app:stroke_color="@color/colorAccent"
-        app:stroke_width="6dp">
+        android:background="@color/colorAccent"
+        app:round_corner="6dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
             android:src="@mipmap/test" />
 
     </com.yc.rclayout.RCLinearLayout>

@@ -56,6 +56,11 @@
         <attr name="stroke_color" />
         <attr name="stroke_width" />
         <attr name="clip_background" />
+        <attr name="shadow_sides" />
+        <attr name="shadow_color" />
+        <attr name="shadow_ratius" />
+        <attr name="shadow_offsetX" />
+        <attr name="shadow_offsetY" />
     </declare-styleable>
 
     <!--假体：用于提示-->
