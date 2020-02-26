@@ -10,11 +10,16 @@ import android.widget.RelativeLayout;
 import com.yc.rclayout.helper.RCAttrs;
 import com.yc.rclayout.helper.RCHelper;
 
+import skin.support.widget.SkinCompatBackgroundHelper;
+import skin.support.widget.SkinCompatSupportable;
+
 /**
  * 作用：圆角相对布局
  * 作者：GcsSloop
  */
-public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAttrs {
+public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAttrs, SkinCompatSupportable {
+
+    private SkinCompatBackgroundHelper mBackgroundTintHelper;
     RCHelper mRCHelper;
 
     public RCRelativeLayout(Context context) {
@@ -31,6 +36,16 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
         mRCHelper.initAttrs(context, this, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         mRCHelper.setPadding(this);
+        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
+        mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
+    }
+
+    @Override
+    public void setBackgroundResource(int resId) {
+        super.setBackgroundResource(resId);
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.onSetBackgroundResource(resId);
+        }
     }
 
     @Override
@@ -199,5 +214,12 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
 
     public void setOnCheckedChangeListener(RCHelper.OnCheckedChangeListener listener) {
         mRCHelper.mOnCheckedChangeListener = listener;
+    }
+
+    @Override
+    public void applySkin() {
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.applySkin();
+        }
     }
 }

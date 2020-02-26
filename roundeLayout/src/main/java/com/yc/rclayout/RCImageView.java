@@ -3,6 +3,7 @@ package com.yc.rclayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Checkable;
@@ -11,13 +12,20 @@ import android.widget.ImageView;
 import com.yc.rclayout.helper.RCAttrs;
 import com.yc.rclayout.helper.RCHelper;
 
+import skin.support.widget.SkinCompatBackgroundHelper;
+import skin.support.widget.SkinCompatImageHelper;
+import skin.support.widget.SkinCompatImageView;
+import skin.support.widget.SkinCompatSupportable;
+
 /**
  * 作用：圆角图片
  * 作者：GcsSloop
  */
 @SuppressLint("AppCompatCustomView")
-public class RCImageView extends ImageView implements Checkable, RCAttrs {
+public class RCImageView extends ImageView implements Checkable, RCAttrs, SkinCompatSupportable {
 
+    private SkinCompatBackgroundHelper mBackgroundTintHelper;
+    private SkinCompatImageHelper mImageHelper;
     RCHelper mRCHelper;
 
     public RCImageView(Context context) {
@@ -32,6 +40,27 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
+        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
+        mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
+
+        mImageHelper = new SkinCompatImageHelper(this);
+        mImageHelper.loadFromAttributes(attrs, defStyleAttr);
+    }
+
+    @Override
+    public void setBackgroundResource(@DrawableRes int resId) {
+        super.setBackgroundResource(resId);
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.onSetBackgroundResource(resId);
+        }
+    }
+
+    @Override
+    public void setImageResource(@DrawableRes int resId) {
+        // Intercept this call and instead retrieve the Drawable via the image helper
+        if (mImageHelper != null) {
+            mImageHelper.setImageResource(resId);
+        }
     }
 
     @Override
@@ -200,5 +229,15 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs {
 
     public void setOnCheckedChangeListener(RCHelper.OnCheckedChangeListener listener) {
         mRCHelper.mOnCheckedChangeListener = listener;
+    }
+
+    @Override
+    public void applySkin() {
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.applySkin();
+        }
+        if (mImageHelper != null) {
+            mImageHelper.applySkin();
+        }
     }
 }

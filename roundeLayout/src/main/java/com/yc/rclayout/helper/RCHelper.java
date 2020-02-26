@@ -14,6 +14,8 @@ import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -25,7 +27,10 @@ import android.widget.Checkable;
 import com.yc.rclayout.R;
 import com.yc.rclayout.ShadowsSide;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import skin.support.content.res.SkinCompatResources;
 
 import static com.yc.rclayout.ShadowsSide.SIDE_BOTTOM;
 import static com.yc.rclayout.ShadowsSide.SIDE_LEFT;
@@ -44,7 +49,7 @@ public class RCHelper {
     public boolean mRoundAsCircle = false; // 圆形
     public int mDefaultStrokeColor;        // 默认描边颜色
     public int mStrokeColor;               // 描边颜色
-    public ColorStateList mStrokeColorStateList;// 描边颜色的状态
+    public int mStrokeColorStateListRes;// 描边颜色的状态
     public int mStrokeWidth;               // 描边半径
     public boolean mClipBackground;        // 是否剪裁背景
     public Region mAreaRegion;             // 内容区域
@@ -52,7 +57,7 @@ public class RCHelper {
     public Paint mShadowPaint;             // 阴影画笔
     public Path mShadowPath;
     public int mShadowSides;              // 阴影方向
-    public int mShadowColor;              // 阴影颜色
+    public int mShadowColorRes;              // 阴影颜色
     public int mShadowRadius;             // 阴影半径
     public int mShadowOffsetX;                  // 阴影X轴偏移
     public int mShadowOffsetY;                  // 阴影Y轴偏移
@@ -62,10 +67,11 @@ public class RCHelper {
         mTargetView = targetView;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RCAttrs);
         mRoundAsCircle = ta.getBoolean(R.styleable.RCAttrs_round_as_circle, false);
-        mStrokeColorStateList = ta.getColorStateList(R.styleable.RCAttrs_stroke_color);
-        if (null != mStrokeColorStateList) {
-            mStrokeColor = mStrokeColorStateList.getDefaultColor();
-            mDefaultStrokeColor = mStrokeColorStateList.getDefaultColor();
+        mStrokeColorStateListRes = ta.getResourceId(R.styleable.RCAttrs_stroke_color, 0);
+        ColorStateList strokeColorStateList = getColorStateList(mStrokeColorStateListRes);
+        if (null != strokeColorStateList) {
+            mStrokeColor = strokeColorStateList.getDefaultColor();
+            mDefaultStrokeColor = strokeColorStateList.getDefaultColor();
         } else {
             mStrokeColor = Color.WHITE;
             mDefaultStrokeColor = Color.WHITE;
@@ -73,7 +79,7 @@ public class RCHelper {
         mStrokeWidth = ta.getDimensionPixelSize(R.styleable.RCAttrs_stroke_width, 0);
         mClipBackground = ta.getBoolean(R.styleable.RCAttrs_clip_background, false);
         mShadowSides = ta.getInt(R.styleable.RCAttrs_shadow_sides, ShadowsSide.SIDE_ALL);
-        mShadowColor = ta.getColor(R.styleable.RCAttrs_shadow_color, Color.WHITE);
+        mShadowColorRes = ta.getResourceId(R.styleable.RCAttrs_shadow_color, 0);
         mShadowRadius = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_ratius, 0);
         mShadowOffsetX = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_offsetX, 0);
         mShadowOffsetY = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_offsetY, 0);
@@ -120,44 +126,6 @@ public class RCHelper {
         targetView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
-    /**
-     * 测量宽度
-     *
-     * @param widthMeasureSpec
-     * @return
-     */
-    public int measureWidth(int widthMeasureSpec) {
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        if (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST) {
-            int width = MeasureSpec.getSize(widthMeasureSpec);
-            int paddingLeft = mTargetView.getPaddingLeft();
-            int paddingRight = mTargetView.getPaddingRight();
-            width -= (mShadowSides & SIDE_LEFT) == SIDE_LEFT ? mShadowRadius + mShadowOffsetX : 0;
-            width -= (mShadowSides & SIDE_RIGHT) == SIDE_RIGHT ? mShadowRadius + mShadowOffsetX : 0;
-            return MeasureSpec.makeMeasureSpec(width, widthMode);
-        }
-        return widthMeasureSpec;
-    }
-
-    /**
-     * 测量高度
-     *
-     * @param heightMeasureSpec
-     * @return
-     */
-    public int measureHeight(int heightMeasureSpec) {
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        if (heightMode == MeasureSpec.EXACTLY || heightMode == MeasureSpec.AT_MOST) {
-            int height = MeasureSpec.getSize(heightMeasureSpec);
-            int paddingTop = mTargetView.getPaddingTop();
-            int paddingBottom = mTargetView.getPaddingBottom();
-//            height -= (mShadowSides & SIDE_TOP) == SIDE_TOP ? mShadowRadius + mShadowOffsetY : 0;
-            height -= (mShadowSides & SIDE_BOTTOM) == SIDE_BOTTOM ? mShadowRadius + mShadowOffsetY : 0;
-            return MeasureSpec.makeMeasureSpec(height, heightMode);
-        }
-        return heightMeasureSpec;
-    }
-
     public void onSizeChanged(View view, int w, int h) {
         mLayer.set(0, 0, w, h);
         mShadowPath.reset();
@@ -197,11 +165,11 @@ public class RCHelper {
     }
 
     public void onShadowDraw(Canvas canvas) {
-        if (mShadowOffsetX > 0 || mShadowOffsetY > 0 || mShadowColor > 0 || mShadowRadius > 0) {
+        if (mShadowOffsetX > 0 || mShadowOffsetY > 0 || mShadowColorRes > 0 || mShadowRadius > 0) {
             mShadowPaint.setAntiAlias(true);
             mShadowPaint.setStyle(Paint.Style.FILL);
-            mShadowPaint.setColor(Color.WHITE);
-            mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, mShadowColor);
+            mShadowPaint.setColor(Color.TRANSPARENT);
+            mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, getColor(mShadowColorRes));
             canvas.drawPath(mClipPath, mShadowPaint);
         }
     }
@@ -231,6 +199,18 @@ public class RCHelper {
         canvas.drawPath(path, mPaint);
     }
 
+    private int getColor(@ColorRes int resId) {
+        if (mTargetView == null) return -1;
+        if (resId == 0) return 0;
+        return SkinCompatResources.getColor(mTargetView.getContext(), resId);
+    }
+
+    private ColorStateList getColorStateList(@DrawableRes int resId) {
+        if (mTargetView == null) return null;
+        if (resId == 0) return null;
+        return SkinCompatResources.getColorStateList(mTargetView.getContext(), resId);
+    }
+
 
     //--- Selector 支持 ----------------------------------------------------------------------------
 
@@ -253,12 +233,13 @@ public class RCHelper {
             if (view.isActivated()) stateListArray.add(android.R.attr.state_activated);
             if (view.hasWindowFocus()) stateListArray.add(android.R.attr.state_window_focused);
 
-            if (mStrokeColorStateList != null && mStrokeColorStateList.isStateful()) {
+            ColorStateList strokeColorStateList = getColorStateList(mStrokeColorStateListRes);
+            if (strokeColorStateList != null && strokeColorStateList.isStateful()) {
                 int[] stateList = new int[stateListArray.size()];
                 for (int i = 0; i < stateListArray.size(); i++) {
                     stateList[i] = stateListArray.get(i);
                 }
-                int stateColor = mStrokeColorStateList.getColorForState(stateList, mDefaultStrokeColor);
+                int stateColor = strokeColorStateList.getColorForState(stateList, mDefaultStrokeColor);
                 ((RCAttrs) view).setStrokeColor(stateColor);
             }
         }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="#FF191919"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
@@ -40,7 +41,7 @@
         android:id="@+id/rciv_three"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@mipmap/test"
+        android:src="@mipmap/test"
         android:scaleType="centerCrop"
         app:clip_background="true"
         app:layout_constraintEnd_toEndOf="@+id/rciv_one"
@@ -63,7 +64,7 @@
         app:shadow_offsetY="6dp"
         app:shadow_ratius="6dp"
         app:stroke_color="@color/colorAccent"
-        app:stroke_width="3dp">
+        app:stroke_width="6dp">
 
         <com.yc.rclayout.RCImageView
             android:id="@+id/iv_image"

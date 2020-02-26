@@ -10,13 +10,17 @@ import android.widget.LinearLayout;
 import com.yc.rclayout.helper.RCAttrs;
 import com.yc.rclayout.helper.RCHelper;
 
+import skin.support.widget.SkinCompatBackgroundHelper;
+import skin.support.widget.SkinCompatSupportable;
+
 /**
  * @Author: YuChuan
  * @CreateDate: 2019/12/27 0027 上午 11:05
  * @Description:
  */
-public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs {
+public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs, SkinCompatSupportable {
 
+    private SkinCompatBackgroundHelper mBackgroundTintHelper;
     RCHelper mRCHelper;
 
     public RCLinearLayout(Context context) {
@@ -33,6 +37,16 @@ public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs 
         mRCHelper.initAttrs(context, this, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         mRCHelper.setPadding(this);
+        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
+        mBackgroundTintHelper.loadFromAttributes(attrs, defStyle);
+    }
+
+    @Override
+    public void setBackgroundResource(int resId) {
+        super.setBackgroundResource(resId);
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.onSetBackgroundResource(resId);
+        }
     }
 
     @Override
@@ -215,4 +229,10 @@ public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs 
         mRCHelper.mOnCheckedChangeListener = listener;
     }
 
+    @Override
+    public void applySkin() {
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.applySkin();
+        }
+    }
 }

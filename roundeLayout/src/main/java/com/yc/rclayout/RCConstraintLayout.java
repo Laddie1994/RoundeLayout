@@ -10,12 +10,16 @@ import android.widget.Checkable;
 import com.yc.rclayout.helper.RCAttrs;
 import com.yc.rclayout.helper.RCHelper;
 
+import skin.support.widget.SkinCompatBackgroundHelper;
+import skin.support.widget.SkinCompatSupportable;
+
 /**
  * @Author: YuChuan
  * @CreateDate: 2019/11/21 0021 下午 4:21
  * @Description:
  */
-public class RCConstraintLayout extends ConstraintLayout implements Checkable, RCAttrs {
+public class RCConstraintLayout extends ConstraintLayout implements Checkable, RCAttrs, SkinCompatSupportable {
+    private final SkinCompatBackgroundHelper mBackgroundTintHelper;
     RCHelper mRCHelper;
 
     public RCConstraintLayout(Context context) {
@@ -32,6 +36,8 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         mRCHelper.initAttrs(context, this, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
         mRCHelper.setPadding(this);
+        mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
+        mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
     }
 
     @Override
@@ -79,6 +85,14 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
             refreshDrawableState();
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void setBackgroundResource(int resId) {
+        super.setBackgroundResource(resId);
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.onSetBackgroundResource(resId);
+        }
     }
 
     //--- 公开接口 ----------------------------------------------------------------------------------
@@ -230,5 +244,12 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
 
     public void setOnCheckedChangeListener(RCHelper.OnCheckedChangeListener listener) {
         mRCHelper.mOnCheckedChangeListener = listener;
+    }
+
+    @Override
+    public void applySkin() {
+        if (mBackgroundTintHelper != null) {
+            mBackgroundTintHelper.applySkin();
+        }
     }
 }
