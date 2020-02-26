@@ -13,6 +13,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Region;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -168,7 +170,12 @@ public class RCHelper {
         if (mShadowOffsetX > 0 || mShadowOffsetY > 0 || mShadowColorRes > 0 || mShadowRadius > 0) {
             mShadowPaint.setAntiAlias(true);
             mShadowPaint.setStyle(Paint.Style.FILL);
-            mShadowPaint.setColor(Color.TRANSPARENT);
+            Drawable background = mTargetView.getBackground();
+            if (background instanceof ColorDrawable) {
+                mShadowPaint.setColor(((ColorDrawable) background).getColor());
+            } else {
+                mShadowPaint.setColor(Color.WHITE);
+            }
             mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, getColor(mShadowColorRes));
             canvas.drawPath(mClipPath, mShadowPaint);
         }
