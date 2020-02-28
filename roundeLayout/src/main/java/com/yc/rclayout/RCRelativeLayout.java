@@ -35,7 +35,6 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
-        mRCHelper.setPadding(this);
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
     }
@@ -56,7 +55,6 @@ public class RCRelativeLayout extends RelativeLayout implements Checkable, RCAtt
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        mRCHelper.onShadowDraw(canvas);
         canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
         mRCHelper.onClipDraw(canvas);

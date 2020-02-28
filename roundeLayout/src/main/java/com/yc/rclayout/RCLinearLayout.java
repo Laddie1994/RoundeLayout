@@ -36,7 +36,6 @@ public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs,
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
         setLayerType(LAYER_TYPE_SOFTWARE, null);
-        mRCHelper.setPadding(this);
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyle);
     }
@@ -62,7 +61,6 @@ public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs,
 
     @Override
     public void dispatchDraw(Canvas canvas) {
-        mRCHelper.onShadowDraw(canvas);
         canvas.saveLayer(mRCHelper.mLayer, null, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
         mRCHelper.onClipDraw(canvas);

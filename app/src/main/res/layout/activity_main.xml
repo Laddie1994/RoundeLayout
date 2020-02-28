@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.yc.rclayout.RCConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF191919"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
-    app:round_corner="8dp"
     tools:context=".MainActivity">
 
     <com.yc.rclayout.RCImageView
@@ -33,7 +31,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:round_corner="20dp"
-        app:clip_background="true"
         app:stroke_color="@color/colorAccent"
         app:stroke_width="6dp" />
 
@@ -55,15 +52,10 @@
         android:id="@+id/rcc_layout"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:clip_background="true"
-        android:background="@color/colorPrimary"
         app:layout_constraintLeft_toLeftOf="@+id/rciv_two"
         app:layout_constraintRight_toRightOf="@+id/rciv_two"
         app:layout_constraintTop_toBottomOf="@+id/rciv_two"
         app:round_corner="8dp"
-        app:shadow_color="#000000"
-        app:shadow_offsetY="6dp"
-        app:shadow_ratius="6dp"
         app:stroke_color="@color/colorAccent"
         app:stroke_width="6dp">
 
@@ -116,4 +108,4 @@
 
     </com.yc.rclayout.RCLinearLayout>
 
-</com.yc.rclayout.RCConstraintLayout>
+</android.support.constraint.ConstraintLayout>

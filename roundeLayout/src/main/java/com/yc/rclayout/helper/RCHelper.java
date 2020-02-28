@@ -10,34 +10,20 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Region;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.View.MeasureSpec;
-import android.view.ViewGroup;
 import android.widget.Checkable;
 
 import com.yc.rclayout.R;
-import com.yc.rclayout.ShadowsSide;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import skin.support.content.res.SkinCompatResources;
-
-import static com.yc.rclayout.ShadowsSide.SIDE_BOTTOM;
-import static com.yc.rclayout.ShadowsSide.SIDE_LEFT;
-import static com.yc.rclayout.ShadowsSide.SIDE_RIGHT;
-import static com.yc.rclayout.ShadowsSide.SIDE_TOP;
 
 /**
  * 作用：圆角辅助工具
@@ -56,13 +42,6 @@ public class RCHelper {
     public boolean mClipBackground;        // 是否剪裁背景
     public Region mAreaRegion;             // 内容区域
     public RectF mLayer;                   // 画布图层大小
-    public Paint mShadowPaint;             // 阴影画笔
-    public Path mShadowPath;
-    public int mShadowSides;              // 阴影方向
-    public int mShadowColorRes;              // 阴影颜色
-    public int mShadowRadius;             // 阴影半径
-    public int mShadowOffsetX;                  // 阴影X轴偏移
-    public int mShadowOffsetY;                  // 阴影Y轴偏移
     private View mTargetView;
 
     public void initAttrs(Context context, View targetView, AttributeSet attrs) {
@@ -80,11 +59,6 @@ public class RCHelper {
         }
         mStrokeWidth = ta.getDimensionPixelSize(R.styleable.RCAttrs_stroke_width, 0);
         mClipBackground = ta.getBoolean(R.styleable.RCAttrs_clip_background, false);
-        mShadowSides = ta.getInt(R.styleable.RCAttrs_shadow_sides, ShadowsSide.SIDE_ALL);
-        mShadowColorRes = ta.getResourceId(R.styleable.RCAttrs_shadow_color, 0);
-        mShadowRadius = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_ratius, 0);
-        mShadowOffsetX = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_offsetX, 0);
-        mShadowOffsetY = ta.getDimensionPixelSize(R.styleable.RCAttrs_shadow_offsetY, 0);
         int roundCorner = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner, 0);
         int roundCornerTopLeft = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner_top_left, roundCorner);
         int roundCornerTopRight = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner_top_right, roundCorner);
@@ -110,28 +84,10 @@ public class RCHelper {
         mPaint = new Paint();
         mPaint.setColor(Color.WHITE);
         mPaint.setAntiAlias(true);
-
-        mShadowPath = new Path();
-        mShadowPaint = new Paint();
-    }
-
-    /**
-     * 设置padding
-     */
-    public void setPadding(View targetView) {
-        int paddingX = mShadowRadius + mShadowOffsetX;
-        int paddingY = mShadowRadius + mShadowOffsetY;
-        int paddingLeft = targetView.getPaddingLeft() + ((mShadowSides & SIDE_LEFT) == SIDE_LEFT ? paddingX : 0);
-        int paddingTop = targetView.getPaddingTop() + ((mShadowSides & SIDE_TOP) == SIDE_TOP ? paddingY : 0);
-        int paddingRight = targetView.getPaddingRight() + ((mShadowSides & SIDE_RIGHT) == SIDE_RIGHT ? paddingX : 0);
-        int paddingBottom = targetView.getPaddingBottom() + ((mShadowSides & SIDE_BOTTOM) == SIDE_BOTTOM ? paddingY : 0);
-        targetView.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
     public void onSizeChanged(View view, int w, int h) {
         mLayer.set(0, 0, w, h);
-        mShadowPath.reset();
-        mShadowPath.addRoundRect(mLayer, radii, Path.Direction.CW);
         refreshRegion(view);
     }
 
@@ -164,21 +120,6 @@ public class RCHelper {
         Region clip = new Region((int) areas.left, (int) areas.top,
                 (int) areas.right, (int) areas.bottom);
         mAreaRegion.setPath(mClipPath, clip);
-    }
-
-    public void onShadowDraw(Canvas canvas) {
-        if (mShadowOffsetX > 0 || mShadowOffsetY > 0 || mShadowColorRes > 0 || mShadowRadius > 0) {
-            mShadowPaint.setAntiAlias(true);
-            mShadowPaint.setStyle(Paint.Style.FILL);
-            Drawable background = mTargetView.getBackground();
-            if (background instanceof ColorDrawable) {
-                mShadowPaint.setColor(((ColorDrawable) background).getColor());
-            } else {
-                mShadowPaint.setColor(Color.WHITE);
-            }
-            mShadowPaint.setShadowLayer(mShadowRadius, mShadowOffsetX, mShadowOffsetY, getColor(mShadowColorRes));
-            canvas.drawPath(mClipPath, mShadowPaint);
-        }
     }
 
     public void onClipDraw(Canvas canvas) {

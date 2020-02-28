@@ -7,12 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.yc.rclayout.RCConstraintLayout;
-import com.yc.rclayout.ShadowsSide;
 
 public class MainActivity extends AppCompatActivity {
 
