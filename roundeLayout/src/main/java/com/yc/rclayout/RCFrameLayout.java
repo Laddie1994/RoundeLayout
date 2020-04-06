@@ -35,7 +35,6 @@ public class RCFrameLayout extends FrameLayout implements Checkable, RCAttrs, Sk
         super(context, attrs, defStyle);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyle);
     }

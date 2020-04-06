@@ -35,7 +35,6 @@ public class RCLinearLayout extends LinearLayout  implements Checkable, RCAttrs,
         super(context, attrs, defStyle);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyle);
     }

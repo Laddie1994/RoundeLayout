@@ -34,7 +34,6 @@ public class RCConstraintLayout extends ConstraintLayout implements Checkable, R
         super(context, attrs, defStyleAttr);
         mRCHelper = new RCHelper();
         mRCHelper.initAttrs(context, this, attrs);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
         mBackgroundTintHelper = new SkinCompatBackgroundHelper(this);
         mBackgroundTintHelper.loadFromAttributes(attrs, defStyleAttr);
     }
