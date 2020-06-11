@@ -242,5 +242,6 @@ public class RCImageView extends ImageView implements Checkable, RCAttrs, SkinCo
         if (mRCHelper != null){
             mRCHelper.applySkin();
         }
+        invalidate();
     }
 }
