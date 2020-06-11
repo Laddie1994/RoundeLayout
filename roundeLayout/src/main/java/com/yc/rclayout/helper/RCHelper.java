@@ -49,14 +49,6 @@ public class RCHelper {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RCAttrs);
         mRoundAsCircle = ta.getBoolean(R.styleable.RCAttrs_round_as_circle, false);
         mStrokeColorStateListRes = ta.getResourceId(R.styleable.RCAttrs_stroke_color, 0);
-        ColorStateList strokeColorStateList = getColorStateList(mStrokeColorStateListRes);
-        if (null != strokeColorStateList) {
-            mStrokeColor = strokeColorStateList.getDefaultColor();
-            mDefaultStrokeColor = strokeColorStateList.getDefaultColor();
-        } else {
-            mStrokeColor = Color.WHITE;
-            mDefaultStrokeColor = Color.WHITE;
-        }
         mStrokeWidth = ta.getDimensionPixelSize(R.styleable.RCAttrs_stroke_width, 0);
         mClipBackground = ta.getBoolean(R.styleable.RCAttrs_clip_background, false);
         int roundCorner = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner, 0);
@@ -65,6 +57,8 @@ public class RCHelper {
         int roundCornerBottomLeft = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner_bottom_left, roundCorner);
         int roundCornerBottomRight = ta.getDimensionPixelSize(R.styleable.RCAttrs_round_corner_bottom_right, roundCorner);
         ta.recycle();
+
+        setStorekeColor(mStrokeColorStateListRes);
 
         radii[0] = roundCornerTopLeft;
         radii[1] = roundCornerTopLeft;
@@ -145,6 +139,25 @@ public class RCHelper {
         path.addRect(0, 0, (int) mLayer.width(), (int) mLayer.height(), Path.Direction.CW);
         path.op(mClipPath, Path.Op.DIFFERENCE);
         canvas.drawPath(path, mPaint);
+    }
+
+    public void applySkin(){
+        setStorekeColor(mStrokeColorStateListRes);
+    }
+
+    /**
+     * 设置边框颜色
+     * @param storekeColorRes
+     */
+    private void setStorekeColor(@ColorRes int storekeColorRes){
+        ColorStateList strokeColorStateList = getColorStateList(storekeColorRes);
+        if (null != strokeColorStateList) {
+            mStrokeColor = strokeColorStateList.getDefaultColor();
+            mDefaultStrokeColor = strokeColorStateList.getDefaultColor();
+        } else {
+            mStrokeColor = Color.WHITE;
+            mDefaultStrokeColor = Color.WHITE;
+        }
     }
 
     private int getColor(@ColorRes int resId) {
