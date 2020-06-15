@@ -3,7 +3,7 @@ package com.yc.rclayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Checkable;
@@ -14,7 +14,6 @@ import com.yc.rclayout.helper.RCHelper;
 
 import skin.support.widget.SkinCompatBackgroundHelper;
 import skin.support.widget.SkinCompatImageHelper;
-import skin.support.widget.SkinCompatImageView;
 import skin.support.widget.SkinCompatSupportable;
 
 /**
